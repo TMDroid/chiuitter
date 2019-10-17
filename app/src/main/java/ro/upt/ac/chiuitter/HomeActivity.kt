@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.view_home.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -15,23 +17,30 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_home)
 
+        fab_add.setOnClickListener { composeChiuit() }
         initList()
     }
 
     private fun initList() {
         val chiuitList = dummyChiuitStore.getAllData()
+        listAdapter = ChiuitRecyclerViewAdapter(chiuitList.toMutableList()) {
+            shareChiuit(it.description)
+        }
 
-        TODO("7. Instantiate the adapter, then setup the recycler view list")
+        rv_chiuit_list.layoutManager = LinearLayoutManager(this)
+        rv_chiuit_list.adapter = listAdapter
     }
 
     /*
-    Defines text sharing/sending *implicit* intent, opens the application chooser menu,
-    and starts a new activity which supports sharing/sending text.
+    Defines text sharing/sending *implicit* intent, opens the application chooser menu
+    and then starts a new activity which supports sharing/sending text.
      */
     private fun shareChiuit(text: String) {
         val sendIntent = Intent().apply {
-            // TODO 1: Configure to support text sending/sharing and then attach the text as intent's extra.
 
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
 
         }
 
@@ -44,12 +53,11 @@ class HomeActivity : AppCompatActivity() {
     Defines an *explicit* intent which will be used to start ComposeActivity.
      */
     private fun composeChiuit() {
-        // TODO 2: Create an explicit intent which points to ComposeActivity.
+        val intent = Intent(this, ComposeActivity::class.java)
 
-
-        // TODO 3: Start a new activity with the previously defined intent.
-        // We start a new activity that we expect to return the acquired text as the result.
-
+        // Not only we are using the explicit approach, but we start a new activity
+        // that we expect to return the text as result.
+        startActivityForResult(intent, COMPOSE_REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -61,13 +69,9 @@ class HomeActivity : AppCompatActivity() {
 
     private fun extractText(data: Intent?) {
         data?.let {
-            // TODO 5: Extract the text from result intent.
+            val text = it.extras?.getString(ComposeActivity.EXTRA_TEXT)
 
-
-            // TODO 6: Check if text is not null or empty, then set the new "chiuit" content.
-
-
-            TODO("13. Instantiate a new chiuit object that add it to the adapter")
+            listAdapter.addItem(Chiuit(text!!))
         }
     }
 

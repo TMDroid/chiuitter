@@ -33,6 +33,7 @@ class DummyChiuitStore {
                             "cetera mai și greșește…\n" +
                             "gura mea le potrivește!"),
                     Chiuit("Frunză verde lemn uscat\n" +
-                            "de strigat m-am săturat"))
+                            "de strigat m-am săturat")
+            )
 
 }
