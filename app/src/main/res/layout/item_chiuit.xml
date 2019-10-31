@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_margin="8dp">
-
-  <LinearLayout
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
-    android:orientation="horizontal">
+    android:layout_margin="8dp">
 
-    <TextView
-      android:id="@+id/txv_content"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="5"
-      android:padding="4dp"
-      android:gravity="center"
-      android:text="@string/chiuit_example"
-      android:textSize="14sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
 
-    <ImageButton
-      android:id="@+id/ibt_share"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:background="@android:color/transparent"
-      android:src="@drawable/ic_send"/>
+        <TextView
+            android:id="@+id/txv_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/chiuit_example"
+            android:textSize="14sp" />
 
-     <!--TODO: Add a new button for delete action-->
+        <ImageButton
+            android:id="@+id/ibt_share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_send" />
 
-  </LinearLayout>
+        <ImageButton
+            android:id="@+id/ibt_delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_delete" />
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

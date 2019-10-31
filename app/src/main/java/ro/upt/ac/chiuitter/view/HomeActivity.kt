@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.view_home.*
 import ro.upt.ac.chiuitter.R
 import ro.upt.ac.chiuitter.data.database.DbChiuitStore
 import ro.upt.ac.chiuitter.data.database.RoomDatabase
+import ro.upt.ac.chiuitter.domain.Chiuit
 import ro.upt.ac.chiuitter.viewmodel.HomeViewModel
 import ro.upt.ac.chiuitter.viewmodel.HomeViewModelFactory
 
@@ -37,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         viewModel.chiuitsLiveData.observe(this, Observer { chiuts ->
-            TODO("Instantiate an adapter with the received list and assign it to recycler view")
+            rv_chiuit_list.adapter = ChiuitRecyclerViewAdapter(chiuts, this::shareChiuit, this::deleteChiuit)
         })
 
         viewModel.fetchChiuits()
@@ -47,14 +48,20 @@ class HomeActivity : AppCompatActivity() {
     Defines text sharing/sending *implicit* intent, opens the application chooser menu
     and then starts a new activity which supports sharing/sending text.
      */
-    private fun shareChiuit(text: String) {
+    private fun shareChiuit(chiuit: Chiuit) {
         val sendIntent = Intent().apply {
-            TODO("Customize an implicit intent which triggers text sharing")
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, chiuit.description)
         }
 
         val intentChooser = Intent.createChooser(sendIntent, "")
 
         startActivity(intentChooser)
+    }
+
+    private fun deleteChiuit(chiuit: Chiuit) {
+        viewModel.removeChiuit(chiuit)
     }
 
     /*
